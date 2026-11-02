@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UTH Todo</string>
+    <string name="app_tagline">Studies and housework — kept tidy every day</string>
+    <string name="app_version">Vertion</string>
+    <string name="btn_skip">Skip</string>
+    <string name="btn_next">Continue</string>
+    <string name="btn_get_started">Start</string>
+    <string name="onboarding_title_1">Everything, all in one place</string>
+    <string name="onboarding_desc_1">Keep track of assignments, chores, and appointments. Never forget a task again.</string>
+    <string name="onboarding_title_2">Categorized by Learning and Life</string>
+    <string name="onboarding_desc_2">Each task has its own group, so you can see at a glance what needs to be taken care of today.</string>
+    <string name="onboarding_title_3">Timely reminders, getting things done when they need to be done</string>
+    <string name="onboarding_desc_3">Smart notifications help you stay on track and complete your work on time.</string>
+</resources>

@@ -1,0 +1,147 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: tasks
+    // Document ID: Auto-generated string (e.g. Firebase Push ID)
+    // Fields:
+    //   - id: string (optional, 0..128 chars) - Document ID if serialized
+    //   - userId: string (required, 1..128 chars, immutable) - Firebase Auth UID of the task owner
+    //   - title: string (required, 1..200 chars) - Title of the task
+    //   - note: string (optional, 0..2000 chars) - Detailed description or notes
+    //   - category: string (optional, 1..100 chars) - Task category (e.g., "Học tập", "Cá nhân", "Công việc")
+    //   - priority: string (optional, 1..50 chars) - Task priority level (e.g., "Thấp", "Vừa", "Cao")
+    //   - timeText: string (optional, 0..50 chars) - Formatted time display string (e.g., "09:00", "15:30")
+    //   - dueDate: timestamp or null (optional) - Target due date timestamp
+    //   - hasReminder: bool (optional) - Flag indicating if alarm/reminder is active
+    //   - isCompleted: bool (optional) - Task completion status
+    //   - createdAt: timestamp or null (optional, immutable) - Creation server timestamp
+    //
+    // Collection: notifications
+    // Document ID: Auto-generated string
+    // Fields:
+    //   - id: string (optional, 0..128 chars) - Document ID if serialized
+    //   - userId: string (required, 1..128 chars, immutable) - Recipient Firebase Auth UID
+    //   - taskId: string or null (optional, 0..128 chars) - Associated task ID reference
+    //   - title: string (required, 1..200 chars) - Notification headline
+    //   - message: string (required, 1..1000 chars) - Notification message body
+    //   - type: string (optional, 1..50 chars) - Type tag (e.g., "REMINDER", "OVERDUE", "SYSTEM", "DAILY_SUMMARY")
+    //   - isRead: bool (optional) - Read status
+    //   - createdAt: timestamp or null (optional, immutable) - Creation server timestamp
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    // Check if the incoming request is authenticated with Firebase Auth
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the current authenticated user matches the specified userId
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Validate that immutable fields have not been modified during an update
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    // Validate that the document contains ONLY allowed fields (strictly eliminates schema pollution)
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators (Validator Function Pattern)
+    // Mandatory: Invoked in BOTH create and update operations
+    // ===============================================================
+
+    function isValidTask(data) {
+      return hasOnlyAllowedFields([
+        'id', 'userId', 'title', 'note', 'category', 'priority',
+        'timeText', 'dueDate', 'hasReminder', 'isCompleted', 'createdAt'
+      ]) &&
+      data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+      data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+      (!('id' in data) || (data.id is string && data.id.size() <= 128)) &&
+      (!('note' in data) || (data.note is string && data.note.size() <= 2000)) &&
+      (!('category' in data) || (data.category is string && data.category.size() <= 100)) &&
+      (!('priority' in data) || (data.priority is string && data.priority.size() <= 50)) &&
+      (!('timeText' in data) || (data.timeText is string && data.timeText.size() <= 50)) &&
+      (!('dueDate' in data) || data.dueDate == null || data.dueDate is timestamp) &&
+      (!('hasReminder' in data) || data.hasReminder is bool) &&
+      (!('isCompleted' in data) || data.isCompleted is bool) &&
+      (!('createdAt' in data) || data.createdAt == null || data.createdAt is timestamp);
+    }
+
+    function isValidNotification(data) {
+      return hasOnlyAllowedFields([
+        'id', 'userId', 'taskId', 'title', 'message', 'type', 'isRead', 'createdAt'
+      ]) &&
+      data.userId is string && data.userId.size() > 0 && data.userId.size() <= 128 &&
+      data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+      data.message is string && data.message.size() > 0 && data.message.size() <= 1000 &&
+      (!('id' in data) || (data.id is string && data.id.size() <= 128)) &&
+      (!('taskId' in data) || data.taskId == null || (data.taskId is string && data.taskId.size() <= 128)) &&
+      (!('type' in data) || (data.type is string && data.type.size() <= 50)) &&
+      (!('isRead' in data) || data.isRead is bool) &&
+      (!('createdAt' in data) || data.createdAt == null || data.createdAt is timestamp);
+    }
+
+    // ===============================================================
+    // Root Level Match: Default Deny
+    // ===============================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ===============================================================
+    // Tasks Collection Rules
+    // ===============================================================
+    match /tasks/{taskId} {
+      // Allow reading tasks if the authenticated user is the owner
+      allow read: if isOwner(resource.data.userId);
+
+      // Allow creating task only if caller assigns it to themselves and payload is valid
+      allow create: if isOwner(request.resource.data.userId) &&
+                       isValidTask(request.resource.data);
+
+      // Allow updating task only if owned by user, immutable keys are untouched, and payload is valid
+      allow update: if isOwner(resource.data.userId) &&
+                       areImmutableFieldsUnchanged(['userId', 'createdAt']) &&
+                       isValidTask(request.resource.data);
+
+      // Allow deleting task only if owned by user
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // ===============================================================
+    // Notifications Collection Rules
+    // ===============================================================
+    match /notifications/{notificationId} {
+      // Allow reading notifications addressed to the authenticated user
+      allow read: if isOwner(resource.data.userId);
+
+      // Allow creating notification only if caller assigns it to themselves and payload is valid
+      allow create: if isOwner(request.resource.data.userId) &&
+                       isValidNotification(request.resource.data);
+
+      // Allow updating notification (e.g. mark as read) if owned by user, immutable keys are untouched, and payload is valid
+      allow update: if isOwner(resource.data.userId) &&
+                       areImmutableFieldsUnchanged(['userId', 'createdAt']) &&
+                       isValidNotification(request.resource.data);
+
+      // Allow deleting notification only if owned by user
+      allow delete: if isOwner(resource.data.userId);
+    }
+  }
+}

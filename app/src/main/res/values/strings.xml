@@ -1,0 +1,175 @@
+<resources>
+    <string name="app_name" translatable="false">UTH Todo</string>
+    <string name="app_tagline">Việc học, việc nhà — gọn gàng mỗi ngày</string>
+    <string name="app_version">Phiên bản 1.0</string>
+
+    <string name="btn_skip">Bỏ qua</string>
+    <string name="btn_next">Tiếp tục</string>
+    <string name="btn_get_started">Bắt đầu</string>
+    <string name="btn_get_started_now">Bắt đầu ngay</string>
+
+    <string name="onboarding_title_1">Mọi việc, gọn trong một chỗ</string>
+    <string name="onboarding_desc_1">Ghi lại bài tập, việc nhà, lịch hẹn. Không còn quên việc nào.</string>
+
+    <string name="onboarding_title_2">Chia theo Học tập và Cuộc sống</string>
+    <string name="onboarding_desc_2">Mỗi việc có nhóm riêng, nhìn là biết hôm nay cần lo gì.</string>
+
+    <string name="onboarding_title_3">Nhắc nhở đúng giờ, làm việc đúng lúc</string>
+    <string name="onboarding_desc_3">Thông báo thông minh giúp bạn luôn hoàn thành công việc đúng hạn.</string>
+    <string name="onboarding_title_reminder">Nhắc đúng lúc</string>
+    <string name="onboarding_desc_reminder">Bật thông báo để UTH Todo nhắc bạn trước hạn chót.</string>
+
+    <!-- Navigation & Common Actions -->
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_task_list">Danh sách</string>
+    <string name="nav_notifications">Thông báo</string>
+    <string name="nav_settings">Cài đặt</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_confirm">Chọn</string>
+    <string name="action_save">Lưu</string>
+    <string name="action_edit">Sửa</string>
+    <string name="action_delete">Xóa công việc</string>
+    <string name="action_add">Thêm</string>
+    <string name="action_see_all">Xem tất cả</string>
+    <string name="action_back">Quay lại</string>
+    <string name="action_add_task">Thêm công việc</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Chào mừng đến với\nUTH Todo</string>
+    <string name="login_subtitle">Đăng nhập để lưu công việc và đồng bộ trên mọi thiết bị của bạn.</string>
+    <string name="login_feature_backup">Tự động sao lưu, không lo mất dữ liệu</string>
+    <string name="login_feature_sync">Đồng bộ đa nền tảng tức thì</string>
+    <string name="login_btn_google">Tiếp tục với Google</string>
+    <string name="login_divider_or">hoặc</string>
+    <string name="login_btn_guest">Dùng thử không cần tài khoản</string>
+    <string name="login_terms_disclaimer">Khi tiếp tục, bạn đồng ý với Điều khoản sử dụng và Chính sách quyền riêng tư của UTH Todo.</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting">Chào %s!</string>
+    <string name="home_today_progress_title">Tiến độ hôm nay</string>
+    <string name="home_progress_format">%1$d/%2$d việc</string>
+    <string name="home_today_tasks_title">Việc hôm nay</string>
+    <string name="home_empty_title">Hôm nay chưa có việc nào</string>
+    <string name="home_empty_subtitle">Bấm nút \'+\' bên dưới để thêm công việc mới nhé!</string>
+    <string name="home_category_remaining_format">%d việc còn lại</string>
+    <string name="motivation_empty">Bắt đầu thêm công việc đầu tiên nhé!</string>
+    <string name="motivation_all_completed">Bạn đã hoàn thành tất cả công việc!</string>
+    <string name="motivation_more_than_half">Đã hoàn thành hơn nửa rồi, cố lên!</string>
+    <string name="motivation_starting">Bắt đầu từ việc nhỏ nhất nhé.</string>
+
+    <!-- Task List Screen -->
+    <string name="task_list_title">Danh sách</string>
+    <string name="task_list_uncompleted_format">%d việc chưa xong</string>
+    <string name="task_list_search_placeholder">Tìm kiếm công việc...</string>
+    <string name="task_list_cd_search">Tìm kiếm</string>
+    <string name="task_list_filter_all">Tất cả</string>
+    <string name="task_list_filter_study">Học tập</string>
+    <string name="task_list_filter_life">Cuộc sống</string>
+    <string name="task_list_empty_search_title">Không tìm thấy công việc</string>
+    <string name="task_list_empty_search_subtitle">Thử tìm kiếm với từ khóa khác nhé!</string>
+    <string name="task_list_empty_title">Chưa có công việc nào</string>
+    <string name="task_list_empty_subtitle">Bấm nút \'+\' bên dưới để bắt đầu thêm việc mới!</string>
+    <string name="task_list_section_pending">CẦN LÀM (%d)</string>
+    <string name="task_list_section_completed">ĐÃ XONG (%d)</string>
+    <string name="task_list_tag_urgent">Gấp</string>
+    <string name="task_list_cd_done">Đã xong</string>
+
+    <!-- Add Task Screen -->
+    <string name="add_task_topbar_title">Việc mới</string>
+    <string name="add_task_title_label">Tên công việc</string>
+    <string name="add_task_title_placeholder">Nhập tên công việc...</string>
+    <string name="add_task_note_label">Ghi chú</string>
+    <string name="add_task_note_placeholder">Thêm ghi chú (không bắt buộc)</string>
+    <string name="add_task_category_label">Nhóm</string>
+    <string name="add_task_date_label">Ngày</string>
+    <string name="add_task_time_label">Giờ</string>
+    <string name="add_task_reminder_label">Nhắc tôi</string>
+    <string name="add_task_reminder_subtitle">Trước 15 phút</string>
+    <string name="add_task_priority_label">Mức ưu tiên</string>
+    <string name="add_task_btn_save">Lưu công việc</string>
+    <string name="priority_low">Thấp</string>
+    <string name="priority_medium">Vừa</string>
+    <string name="priority_high">Cao</string>
+
+    <!-- Task Detail Screen -->
+    <string name="task_detail_title">Chi tiết công việc</string>
+    <string name="task_detail_priority_prefix">Ưu tiên: %s</string>
+    <string name="task_detail_due_date_label">Hạn chót</string>
+    <string name="task_detail_reminder_label">Nhắc nhở</string>
+    <string name="task_detail_repeat_label">Lặp lại</string>
+    <string name="task_detail_repeat_none">Không</string>
+    <string name="task_detail_reminder_none">Không có</string>
+    <string name="task_detail_subtasks_title">Việc nhỏ</string>
+    <string name="task_detail_subtask_input_placeholder">Thêm bước thực hiện...</string>
+    <string name="task_detail_subtask_add_cd">Thêm việc nhỏ</string>
+    <string name="task_detail_btn_mark_incomplete">Đánh dấu chưa xong</string>
+    <string name="task_detail_btn_mark_complete">Đánh dấu hoàn thành</string>
+
+    <!-- Notification Screen -->
+    <string name="notification_title">Thông báo</string>
+    <string name="notification_filter_reminder">Nhắc việc</string>
+    <string name="notification_filter_system">Hệ thống</string>
+    <string name="notification_unread_format">Bạn có %d thông báo mới</string>
+    <string name="notification_mark_all_read">Đã đọc hết</string>
+    <string name="notification_empty_title">Chưa có thông báo nào</string>
+    <string name="notification_empty_subtitle">Thông báo nhắc hẹn và cập nhật công việc sẽ xuất hiện ở đây.</string>
+    <string name="notification_empty_reminder_title">Chưa có lời nhắc nào</string>
+    <string name="notification_empty_reminder_subtitle">Các thông báo nhắc nhở công việc sẽ xuất hiện tại đây.</string>
+    <string name="notification_empty_system_title">Chưa có thông báo hệ thống</string>
+    <string name="notification_empty_system_subtitle">Các thông báo và mẹo sử dụng sẽ xuất hiện tại đây.</string>
+    <string name="notification_welcome_title">Chào mừng bạn đến với UTH Todo</string>
+    <string name="notification_welcome_message">Dữ liệu công việc của bạn được lưu trữ an toàn trên đám mây.</string>
+    <string name="time_just_now">Vừa xong</string>
+    <string name="time_minutes_ago">%d phút trước</string>
+    <string name="time_hours_ago">%d giờ trước</string>
+    <string name="time_yesterday">Hôm qua</string>
+    <string name="time_days_ago">%d ngày trước</string>
+    <string name="notification_cd_delete">Xoá</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_section_interface">GIAO DIỆN</string>
+    <string name="settings_theme_light">Sáng</string>
+    <string name="settings_theme_dark">Tối</string>
+    <string name="settings_theme_auto">Tự động</string>
+    <string name="settings_primary_color">Màu chủ đạo</string>
+    <string name="settings_font_size">Cỡ chữ</string>
+    <string name="settings_font_size_small">Nhỏ</string>
+    <string name="settings_font_size_standard">Chuẩn</string>
+    <string name="settings_font_size_large">Lớn</string>
+    <string name="cd_color_blue">Màu xanh dương</string>
+    <string name="cd_color_green">Màu xanh lá</string>
+    <string name="cd_color_orange">Màu cam</string>
+    <string name="cd_color_purple">Màu tím</string>
+    <string name="settings_section_notification">THÔNG BÁO</string>
+    <string name="settings_reminder_title">Nhắc việc</string>
+    <string name="settings_reminder_subtitle">Báo trước hạn chót 15 phút</string>
+    <string name="settings_sound_title">Âm thanh</string>
+    <string name="settings_sound_subtitle">Phát âm khi có thông báo</string>
+    <string name="settings_summary_title">Tổng kết cuối ngày</string>
+    <string name="settings_summary_subtitle">Gửi lúc 21:00 mỗi tối</string>
+    <string name="settings_section_general">CHUNG</string>
+    <string name="settings_language_title">Ngôn ngữ</string>
+    <string name="settings_language_value">Tiếng Việt</string>
+    <string name="settings_about_title">Giới thiệu UTH Todo</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Hồ sơ</string>
+    <string name="profile_google_linked">Đã liên kết tài khoản Google</string>
+    <string name="profile_guest_badge">Tài khoản dùng thử</string>
+    <string name="profile_stat_completed">Việc đã xong</string>
+    <string name="profile_stat_streak">Chuỗi liên tiếp</string>
+    <string name="profile_stat_streak_days">%d ngày</string>
+    <string name="profile_stat_ontime">Đúng hạn</string>
+    <string name="profile_this_week">Tuần này</string>
+    <string name="profile_weekly_empty">Chưa có dữ liệu thống kê tuần này</string>
+    <string name="profile_sync_title">Đồng bộ dữ liệu</string>
+    <string name="profile_privacy_title">Quyền riêng tư</string>
+    <string name="profile_btn_logout">Đăng xuất</string>
+    <string name="profile_cd_change_avatar">Đổi ảnh đại diện</string>
+
+    <!-- Accessibility / Common -->
+    <string name="cd_avatar">Avatar người dùng</string>
+    <string name="time_today">Hôm nay</string>
+    <string name="time_done">Đã xong</string>
+</resources>
