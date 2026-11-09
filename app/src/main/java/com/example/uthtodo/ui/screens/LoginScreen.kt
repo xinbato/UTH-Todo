@@ -31,6 +31,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,9 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.PrimaryBlue
 import com.example.uthtodo.ui.theme.PureWhite
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.TextDark
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.TextSecondary
@@ -108,7 +107,7 @@ fun LoginScreen(
                 Surface(
                     modifier = Modifier.size(88.dp),
                     shape = RoundedCornerShape(26.dp),
-                    color = PrimaryBlue,
+                    color = MaterialTheme.colorScheme.primary,
                     shadowElevation = 10.dp
                 ) {
                     Box(contentAlignment = Alignment.Center) {
@@ -135,14 +134,14 @@ fun LoginScreen(
                                     modifier = Modifier
                                         .size(24.dp)
                                         .clip(CircleShape)
-                                        .background(SoftBlueBg),
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Box(
                                         modifier = Modifier
                                             .size(16.dp)
                                             .clip(CircleShape)
-                                            .background(PrimaryBlue)
+                                            .background(MaterialTheme.colorScheme.primary)
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(6.dp))
@@ -151,7 +150,7 @@ fun LoginScreen(
                                         .height(8.dp)
                                         .width(20.dp)
                                         .clip(CircleShape)
-                                        .background(SoftBlueBg)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
                                 )
                             }
                         }
@@ -187,7 +186,7 @@ fun LoginScreen(
                         Icon(
                             imageVector = Icons.Outlined.Sync,
                             contentDescription = null,
-                            tint = PrimaryBlue,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                         Text(
@@ -205,7 +204,7 @@ fun LoginScreen(
                         Icon(
                             imageVector = Icons.Outlined.Devices,
                             contentDescription = null,
-                            tint = PrimaryBlue,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                         Text(
@@ -242,7 +241,7 @@ fun LoginScreen(
                     if (isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
-                            color = PrimaryBlue,
+                            color = MaterialTheme.colorScheme.primary,
                             strokeWidth = 2.5.dp
                         )
                     } else {
@@ -306,7 +305,7 @@ fun LoginScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.login_btn_guest),
-                        color = PrimaryBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )

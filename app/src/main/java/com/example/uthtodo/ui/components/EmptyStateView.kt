@@ -1,4 +1,4 @@
-package com.example.uthtodo.ui.components
+﻿package com.example.uthtodo.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -25,8 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 
@@ -50,13 +48,13 @@ fun EmptyStateView(
         Box(
             modifier = Modifier
                 .size(72.dp)
-                .background(LightSoftBlue, CircleShape),
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = PrimaryBlue,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(36.dp)
             )
         }

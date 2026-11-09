@@ -50,11 +50,7 @@ import com.example.uthtodo.R
 import com.example.uthtodo.ui.components.UserAvatar
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.PrimaryBlueDark
 import com.example.uthtodo.ui.theme.PureWhite
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 import java.util.Calendar
@@ -122,7 +118,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .size(36.dp)
                             .clip(CircleShape)
-                            .background(PrimaryBlue)
+                            .background(MaterialTheme.colorScheme.primary)
                             .align(Alignment.BottomEnd)
                             .clickable { onAvatarClick() },
                         contentAlignment = Alignment.Center
@@ -310,8 +306,8 @@ fun ProfileScreen(
                                             .height(barHeight)
                                             .clip(RoundedCornerShape(6.dp))
                                             .background(
-                                                if (isHighlighted) PrimaryBlue
-                                                else if (count > 0) Color(0x592F5BEA)
+                                                if (isHighlighted) MaterialTheme.colorScheme.primary
+                                                else if (count > 0) MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
                                                 else MaterialTheme.colorScheme.surfaceVariant
                                             )
                                     )
@@ -456,14 +452,14 @@ private fun ProfileTopBar(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
                 contentDescription = stringResource(R.string.nav_settings),
-                tint = PrimaryBlue,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = stringResource(R.string.nav_settings),
                 fontSize = 16.sp,
-                color = PrimaryBlue
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -479,7 +475,7 @@ private fun ProfileTopBar(
                 text = stringResource(R.string.action_edit),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = PrimaryBlue
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

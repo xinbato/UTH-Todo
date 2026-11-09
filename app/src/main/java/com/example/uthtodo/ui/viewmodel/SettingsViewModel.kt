@@ -1,6 +1,9 @@
-package com.example.uthtodo.ui.viewmodel
+﻿package com.example.uthtodo.ui.viewmodel
 
 import android.app.Application
+import android.app.LocaleManager
+import android.os.Build
+import android.os.LocaleList
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.uthtodo.data.repository.SettingsRepository
@@ -37,6 +40,8 @@ class SettingsViewModel @JvmOverloads constructor(
             initialValue = 1.0f
         )
 
+    val languageCode: StateFlow<String> = settingsRepository.languageCode
+
     fun setThemeMode(mode: Int) {
         settingsRepository.setThemeMode(mode)
     }
@@ -62,6 +67,14 @@ class SettingsViewModel @JvmOverloads constructor(
     fun setFontScale(scale: Float) {
         viewModelScope.launch {
             settingsRepository.setFontScale(scale)
+        }
+    }
+
+    fun setLanguageCode(code: String) {
+        settingsRepository.setLanguageCode(code)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getApplication<Application>().getSystemService(LocaleManager::class.java)?.applicationLocales =
+                LocaleList.forLanguageTags(code)
         }
     }
 }

@@ -16,20 +16,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,12 +54,8 @@ import com.example.uthtodo.R
 import com.example.uthtodo.ui.components.UserAvatar
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.PrimaryBlueDark
 import com.example.uthtodo.ui.theme.PrimaryColors
 import com.example.uthtodo.ui.theme.PureWhite
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.TextDark
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
@@ -75,6 +77,8 @@ fun SettingsScreen(
     onSoundToggle: (Boolean) -> Unit = {},
     isSummaryEnabled: Boolean = false,
     onSummaryToggle: (Boolean) -> Unit = {},
+    languageCode: String = "vi",
+    onLanguageChange: (String) -> Unit = {},
     onProfileClick: () -> Unit = {},
     onTabSelected: (Int) -> Unit = {},
     onAddTaskClick: () -> Unit = {}
@@ -393,6 +397,13 @@ fun SettingsScreen(
                 letterSpacing = 0.5.sp
             )
 
+            var showLanguageDialog by remember { mutableStateOf(false) }
+
+            val languageDisplayValue = when (languageCode) {
+                "en" -> stringResource(R.string.language_english)
+                else -> stringResource(R.string.language_vietnamese)
+            }
+
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(18.dp),
@@ -401,7 +412,8 @@ fun SettingsScreen(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     SettingValueRow(
                         title = stringResource(R.string.settings_language_title),
-                        value = stringResource(R.string.settings_language_value)
+                        value = languageDisplayValue,
+                        onClick = { showLanguageDialog = true }
                     )
 
                     HorizontalDivider(color = Color(0xFFEDEDF0), thickness = 1.dp)
@@ -411,6 +423,17 @@ fun SettingsScreen(
                         value = stringResource(R.string.app_version)
                     )
                 }
+            }
+
+            if (showLanguageDialog) {
+                LanguageSelectionDialog(
+                    currentLanguage = languageCode,
+                    onLanguageSelected = { code ->
+                        onLanguageChange(code)
+                        showLanguageDialog = false
+                    },
+                    onDismiss = { showLanguageDialog = false }
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -497,6 +520,93 @@ private fun SettingValueRow(
                 modifier = Modifier.size(16.dp)
             )
         }
+    }
+}
+
+@Composable
+fun LanguageSelectionDialog(
+    currentLanguage: String,
+    onLanguageSelected: (String) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val languages = listOf(
+        "vi" to stringResource(R.string.language_vietnamese),
+        "en" to stringResource(R.string.language_english)
+    )
+
+    AlertDialog(
+        modifier = modifier,
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.settings_language_dialog_title),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                languages.forEach { (code, label) ->
+                    val isSelected = currentLanguage == code
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .selectable(
+                                selected = isSelected,
+                                onClick = { onLanguageSelected(code) },
+                                role = Role.RadioButton
+                            )
+                            .padding(horizontal = 12.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = label,
+                            fontSize = 15.sp,
+                            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                        )
+                        RadioButton(
+                            selected = isSelected,
+                            onClick = null,
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.primary
+                            )
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(
+                    text = stringResource(R.string.action_cancel),
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        },
+        shape = RoundedCornerShape(20.dp),
+        containerColor = MaterialTheme.colorScheme.surface
+    )
+}
+
+@Preview(name = "Language Dialog Light", showBackground = true)
+@Preview(name = "Language Dialog Dark", uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun LanguageSelectionDialogPreview() {
+    UTHTodoTheme {
+        LanguageSelectionDialog(
+            currentLanguage = "vi",
+            onLanguageSelected = {},
+            onDismiss = {}
+        )
     }
 }
 

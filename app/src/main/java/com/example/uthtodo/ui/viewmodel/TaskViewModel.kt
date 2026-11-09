@@ -1,4 +1,4 @@
-package com.example.uthtodo.ui.viewmodel
+﻿package com.example.uthtodo.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -128,7 +128,7 @@ class TaskViewModel @JvmOverloads constructor(
 
         HomeScreenModel(
             userHeader = UserHeaderModel(
-                userName = "Chào $displayName!",
+                userName = displayName,
                 dateText = todayFormatted,
                 avatarInitials = initials,
                 avatarUrl = avatarUrl

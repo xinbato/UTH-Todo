@@ -1,4 +1,4 @@
-package com.example.uthtodo.navigation
+﻿package com.example.uthtodo.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.uthtodo.R
 import com.example.uthtodo.data.repository.initials
 import com.example.uthtodo.model.OnboardingPageModel
 import com.example.uthtodo.ui.screens.AddTaskScreen
@@ -63,7 +64,7 @@ fun AppNavigation(
     // Handle Task save & error
     LaunchedEffect(taskUiState.isSaved) {
         if (taskUiState.isSaved) {
-            Toast.makeText(context, "Đã lưu công việc thành công!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.toast_task_saved), Toast.LENGTH_SHORT).show()
             taskViewModel.resetState()
             navController.popBackStack()
         }
@@ -329,6 +330,7 @@ fun AppNavigation(
             val isReminderEnabled by settingsViewModel.isReminderEnabled.collectAsStateWithLifecycle()
             val isSoundEnabled by settingsViewModel.isSoundEnabled.collectAsStateWithLifecycle()
             val isSummaryEnabled by settingsViewModel.isSummaryEnabled.collectAsStateWithLifecycle()
+            val languageCode by settingsViewModel.languageCode.collectAsStateWithLifecycle()
 
             SettingsScreen(
                 themeMode = themeMode,
@@ -337,6 +339,8 @@ fun AppNavigation(
                 onPrimaryColorChange = { settingsViewModel.setPrimaryColorIndex(it) },
                 fontScale = fontScale,
                 onFontScaleChange = { settingsViewModel.setFontScale(it) },
+                languageCode = languageCode,
+                onLanguageChange = { settingsViewModel.setLanguageCode(it) },
                 isReminderEnabled = isReminderEnabled,
                 onReminderToggle = { settingsViewModel.setReminderEnabled(it) },
                 isSoundEnabled = isSoundEnabled,

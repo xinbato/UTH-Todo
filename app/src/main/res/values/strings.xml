@@ -151,7 +151,11 @@
     <string name="settings_section_general">CHUNG</string>
     <string name="settings_language_title">Ngôn ngữ</string>
     <string name="settings_language_value">Tiếng Việt</string>
+    <string name="settings_language_dialog_title">Chọn ngôn ngữ</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_english">English</string>
     <string name="settings_about_title">Giới thiệu UTH Todo</string>
+    <string name="toast_task_saved">Đã lưu công việc thành công!</string>
 
     <!-- Profile Screen -->
     <string name="profile_title">Hồ sơ</string>

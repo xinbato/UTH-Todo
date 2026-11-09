@@ -1,15 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UTH Todo</string>
-    <string name="app_tagline">Studies and housework — kept tidy every day</string>
-    <string name="app_version">Vertion</string>
+    <string name="app_name" translatable="false">UTH Todo</string>
+    <string name="app_tagline">Study, chores — organized every day</string>
+    <string name="app_version">Version 1.0</string>
+
     <string name="btn_skip">Skip</string>
     <string name="btn_next">Continue</string>
-    <string name="btn_get_started">Start</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_get_started_now">Start Now</string>
+
     <string name="onboarding_title_1">Everything, all in one place</string>
     <string name="onboarding_desc_1">Keep track of assignments, chores, and appointments. Never forget a task again.</string>
+
     <string name="onboarding_title_2">Categorized by Learning and Life</string>
     <string name="onboarding_desc_2">Each task has its own group, so you can see at a glance what needs to be taken care of today.</string>
-    <string name="onboarding_title_3">Timely reminders, getting things done when they need to be done</string>
+
+    <string name="onboarding_title_3">Timely reminders, get things done on time</string>
     <string name="onboarding_desc_3">Smart notifications help you stay on track and complete your work on time.</string>
+    <string name="onboarding_title_reminder">Timely Reminders</string>
+    <string name="onboarding_desc_reminder">Enable notifications so UTH Todo can remind you before deadlines.</string>
+
+    <!-- Navigation & Common Actions -->
+    <string name="nav_home">Home</string>
+    <string name="nav_task_list">Tasks</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Select</string>
+    <string name="action_save">Save</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete task</string>
+    <string name="action_add">Add</string>
+    <string name="action_see_all">See all</string>
+    <string name="action_back">Back</string>
+    <string name="action_add_task">Add task</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Welcome to\nUTH Todo</string>
+    <string name="login_subtitle">Sign in to save tasks and sync across all your devices.</string>
+    <string name="login_feature_backup">Automatic backup, never lose your data</string>
+    <string name="login_feature_sync">Instant cross-platform synchronization</string>
+    <string name="login_btn_google">Continue with Google</string>
+    <string name="login_divider_or">or</string>
+    <string name="login_btn_guest">Try as Guest without account</string>
+    <string name="login_terms_disclaimer">By continuing, you agree to UTH Todo\'s Terms of Service and Privacy Policy.</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting">Hello, %s!</string>
+    <string name="home_today_progress_title">Today\'s Progress</string>
+    <string name="home_progress_format">%1$d/%2$d tasks</string>
+    <string name="home_today_tasks_title">Today\'s Tasks</string>
+    <string name="home_empty_title">No tasks for today</string>
+    <string name="home_empty_subtitle">Tap the \'+\' button below to add a new task!</string>
+    <string name="home_category_remaining_format">%d tasks remaining</string>
+    <string name="motivation_empty">Start by adding your first task!</string>
+    <string name="motivation_all_completed">You have completed all tasks!</string>
+    <string name="motivation_more_than_half">More than halfway done, keep it up!</string>
+    <string name="motivation_starting">Start with the smallest task.</string>
+
+    <!-- Task List Screen -->
+    <string name="task_list_title">Task List</string>
+    <string name="task_list_uncompleted_format">%d tasks remaining</string>
+    <string name="task_list_search_placeholder">Search tasks...</string>
+    <string name="task_list_cd_search">Search</string>
+    <string name="task_list_filter_all">All</string>
+    <string name="task_list_filter_study">Study</string>
+    <string name="task_list_filter_life">Life</string>
+    <string name="task_list_empty_search_title">No tasks found</string>
+    <string name="task_list_empty_search_subtitle">Try searching with different keywords!</string>
+    <string name="task_list_empty_title">No tasks yet</string>
+    <string name="task_list_empty_subtitle">Tap the \'+\' button below to add your first task!</string>
+    <string name="task_list_section_pending">TO DO (%d)</string>
+    <string name="task_list_section_completed">COMPLETED (%d)</string>
+    <string name="task_list_tag_urgent">Urgent</string>
+    <string name="task_list_cd_done">Completed</string>
+
+    <!-- Add Task Screen -->
+    <string name="add_task_topbar_title">New Task</string>
+    <string name="add_task_title_label">Task name</string>
+    <string name="add_task_title_placeholder">Enter task name...</string>
+    <string name="add_task_note_label">Note</string>
+    <string name="add_task_note_placeholder">Add note (optional)</string>
+    <string name="add_task_category_label">Category</string>
+    <string name="add_task_date_label">Date</string>
+    <string name="add_task_time_label">Time</string>
+    <string name="add_task_reminder_label">Remind me</string>
+    <string name="add_task_reminder_subtitle">15 minutes before</string>
+    <string name="add_task_priority_label">Priority</string>
+    <string name="add_task_btn_save">Save Task</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+
+    <!-- Task Detail Screen -->
+    <string name="task_detail_title">Task Details</string>
+    <string name="task_detail_priority_prefix">Priority: %s</string>
+    <string name="task_detail_due_date_label">Due Date</string>
+    <string name="task_detail_reminder_label">Reminder</string>
+    <string name="task_detail_repeat_label">Repeat</string>
+    <string name="task_detail_repeat_none">None</string>
+    <string name="task_detail_reminder_none">None</string>
+    <string name="task_detail_subtasks_title">Subtasks</string>
+    <string name="task_detail_subtask_input_placeholder">Add a step...</string>
+    <string name="task_detail_subtask_add_cd">Add subtask</string>
+    <string name="task_detail_btn_mark_incomplete">Mark as incomplete</string>
+    <string name="task_detail_btn_mark_complete">Mark as completed</string>
+
+    <!-- Notification Screen -->
+    <string name="notification_title">Notifications</string>
+    <string name="notification_filter_reminder">Reminders</string>
+    <string name="notification_filter_system">System</string>
+    <string name="notification_unread_format">You have %d new notifications</string>
+    <string name="notification_mark_all_read">Mark all as read</string>
+    <string name="notification_empty_title">No notifications yet</string>
+    <string name="notification_empty_subtitle">Reminders and task updates will appear here.</string>
+    <string name="notification_empty_reminder_title">No reminders yet</string>
+    <string name="notification_empty_reminder_subtitle">Task reminder notifications will appear here.</string>
+    <string name="notification_empty_system_title">No system notifications</string>
+    <string name="notification_empty_system_subtitle">System notices and tips will appear here.</string>
+    <string name="notification_welcome_title">Welcome to UTH Todo</string>
+    <string name="notification_welcome_message">Your task data is securely stored in the cloud.</string>
+    <string name="time_just_now">Just now</string>
+    <string name="time_minutes_ago">%d minutes ago</string>
+    <string name="time_hours_ago">%d hours ago</string>
+    <string name="time_yesterday">Yesterday</string>
+    <string name="time_days_ago">%d days ago</string>
+    <string name="notification_cd_delete">Delete</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_interface">INTERFACE</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_auto">Auto</string>
+    <string name="settings_primary_color">Primary Color</string>
+    <string name="settings_font_size">Font Size</string>
+    <string name="settings_font_size_small">Small</string>
+    <string name="settings_font_size_standard">Standard</string>
+    <string name="settings_font_size_large">Large</string>
+    <string name="cd_color_blue">Blue color</string>
+    <string name="cd_color_green">Green color</string>
+    <string name="cd_color_orange">Orange color</string>
+    <string name="cd_color_purple">Purple color</string>
+    <string name="settings_section_notification">NOTIFICATIONS</string>
+    <string name="settings_reminder_title">Task Reminders</string>
+    <string name="settings_reminder_subtitle">Remind 15 minutes before deadline</string>
+    <string name="settings_sound_title">Sound</string>
+    <string name="settings_sound_subtitle">Play sound for notifications</string>
+    <string name="settings_summary_title">Daily Summary</string>
+    <string name="settings_summary_subtitle">Sent at 21:00 every evening</string>
+    <string name="settings_section_general">GENERAL</string>
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_value">English</string>
+    <string name="settings_language_dialog_title">Select Language</string>
+    <string name="language_vietnamese">Tiếng Việt (Vietnamese)</string>
+    <string name="language_english">English</string>
+    <string name="settings_about_title">About UTH Todo</string>
+    <string name="toast_task_saved">Task saved successfully!</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_google_linked">Google account linked</string>
+    <string name="profile_guest_badge">Guest Account</string>
+    <string name="profile_stat_completed">Completed Tasks</string>
+    <string name="profile_stat_streak">Current Streak</string>
+    <string name="profile_stat_streak_days">%d days</string>
+    <string name="profile_stat_ontime">On-time</string>
+    <string name="profile_this_week">This Week</string>
+    <string name="profile_weekly_empty">No statistics for this week yet</string>
+    <string name="profile_sync_title">Data Synchronization</string>
+    <string name="profile_privacy_title">Privacy Policy</string>
+    <string name="profile_btn_logout">Log Out</string>
+    <string name="profile_cd_change_avatar">Change avatar</string>
+
+    <!-- Accessibility / Common -->
+    <string name="cd_avatar">User avatar</string>
+    <string name="time_today">Today</string>
+    <string name="time_done">Done</string>
 </resources>

@@ -61,8 +61,6 @@ import com.example.uthtodo.data.model.AppNotification
 import com.example.uthtodo.ui.components.EmptyStateView
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 import java.text.SimpleDateFormat
@@ -139,15 +137,15 @@ fun NotificationScreen(
                             )
                         },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = LightSoftBlue,
-                            selectedLabelColor = PrimaryBlue,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.primary,
                             containerColor = MaterialTheme.colorScheme.surface,
                             labelColor = TextMuted
                         ),
                         border = FilterChipDefaults.filterChipBorder(
                             enabled = true,
                             selected = isSelected,
-                            borderColor = if (isSelected) PrimaryBlue else BorderGray
+                            borderColor = if (isSelected) MaterialTheme.colorScheme.primary else BorderGray
                         ),
                         shape = RoundedCornerShape(20.dp)
                     )
@@ -232,7 +230,7 @@ private fun NotificationTopBar(
                 Text(
                     text = stringResource(R.string.notification_unread_format, unreadCount),
                     fontSize = 13.sp,
-                    color = PrimaryBlue,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Medium
                 )
             }
@@ -245,13 +243,13 @@ private fun NotificationTopBar(
                         imageVector = Icons.Outlined.CheckCircle,
                         contentDescription = null,
                         modifier = Modifier.size(16.dp),
-                        tint = PrimaryBlue
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = stringResource(R.string.notification_mark_all_read),
                         fontSize = 13.sp,
-                        color = PrimaryBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -281,8 +279,8 @@ private fun NotificationCard(
         )
         else -> Triple(
             Icons.Outlined.NotificationsActive,
-            if (isDark) MaterialTheme.colorScheme.surfaceVariant else LightSoftBlue,
-            PrimaryBlue
+            if (isDark) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.primaryContainer,
+            MaterialTheme.colorScheme.primary
         )
     }
 
@@ -295,7 +293,7 @@ private fun NotificationCard(
         color = if (notification.isRead) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
         border = androidx.compose.foundation.BorderStroke(
             width = if (notification.isRead) 1.dp else 1.5.dp,
-            color = if (notification.isRead) BorderGray else PrimaryBlue.copy(alpha = 0.4f)
+            color = if (notification.isRead) BorderGray else MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
         )
     ) {
         Row(
@@ -349,7 +347,7 @@ private fun NotificationCard(
                             modifier = Modifier
                                 .size(8.dp)
                                 .clip(CircleShape)
-                                .background(PrimaryBlue)
+                                .background(MaterialTheme.colorScheme.primary)
                         )
                     }
                 }

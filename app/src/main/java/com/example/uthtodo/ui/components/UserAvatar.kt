@@ -1,4 +1,4 @@
-package com.example.uthtodo.ui.components
+﻿package com.example.uthtodo.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import com.example.uthtodo.R
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 
 /**
@@ -41,7 +40,7 @@ fun UserAvatar(
             .size(size)
             .clip(CircleShape),
         shape = CircleShape,
-        color = LightSoftBlue
+        color = MaterialTheme.colorScheme.primaryContainer
     ) {
         if (!avatarUrl.isNullOrBlank()) {
             SubcomposeAsyncImage(
@@ -75,7 +74,7 @@ private fun DefaultAvatarContent(
         Text(
             text = initials,
             fontWeight = FontWeight.Bold,
-            color = PrimaryBlue,
+            color = MaterialTheme.colorScheme.primary,
             fontSize = fontSize
         )
     }

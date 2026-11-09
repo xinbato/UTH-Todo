@@ -46,9 +46,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalConfiguration
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.example.uthtodo.R
+import com.example.uthtodo.ui.components.asLocalizedCategory
+import com.example.uthtodo.ui.components.asLocalizedTime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -72,12 +78,9 @@ import com.example.uthtodo.ui.components.UserAvatar
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
 import com.example.uthtodo.ui.theme.IndicatorInactive
-import com.example.uthtodo.ui.theme.LightSoftBlue
 import com.example.uthtodo.ui.theme.OrangeTagBg
 import com.example.uthtodo.ui.theme.OrangeTagText
-import com.example.uthtodo.ui.theme.PrimaryBlue
 import com.example.uthtodo.ui.theme.PureWhite
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.TextDark
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.TextSecondary
@@ -113,6 +116,22 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
+        val currentLocale = LocalConfiguration.current.locales[0] ?: Locale.getDefault()
+        val datePattern = if (currentLocale.language == "en") "EEEE, MMMM d" else "EEEE, d 'tháng' M"
+        val dynamicDateText = remember(currentLocale) {
+            SimpleDateFormat(datePattern, currentLocale)
+                .format(Date())
+                .replaceFirstChar { it.uppercase() }
+        }
+        val dynamicGreeting = stringResource(R.string.home_greeting, model.userHeader.userName)
+
+        val dynamicMotivation = when {
+            model.progress.totalCount == 0 -> stringResource(R.string.motivation_empty)
+            model.progress.completedCount == model.progress.totalCount -> stringResource(R.string.motivation_all_completed)
+            model.progress.percentage >= 50 -> stringResource(R.string.motivation_more_than_half)
+            else -> stringResource(R.string.motivation_starting)
+        }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -126,8 +145,8 @@ fun HomeScreen(
             // Header (Avatar + Greeting + Bell)
             item {
                 HomeHeader(
-                    userName = model.userHeader.userName,
-                    dateText = model.userHeader.dateText,
+                    userName = dynamicGreeting,
+                    dateText = dynamicDateText,
                     avatarInitials = model.userHeader.avatarInitials,
                     avatarUrl = model.userHeader.avatarUrl,
                     unreadNotificationCount = unreadNotificationCount,
@@ -141,7 +160,7 @@ fun HomeScreen(
                     completedCount = model.progress.completedCount,
                     totalCount = model.progress.totalCount,
                     percentage = model.progress.percentage,
-                    motivationText = model.progress.motivationText
+                    motivationText = dynamicMotivation
                 )
             }
 
@@ -167,7 +186,7 @@ fun HomeScreen(
                         text = stringResource(R.string.action_see_all),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
-                        color = PrimaryBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable { onNavigateToTaskList() }
                     )
                 }
@@ -250,7 +269,7 @@ private fun HomeHeader(
                     Icon(
                         imageVector = Icons.Default.Notifications,
                         contentDescription = stringResource(R.string.nav_notifications),
-                        tint = PrimaryBlue,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(22.dp)
                     )
                 }
@@ -279,7 +298,7 @@ private fun TodayProgressCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = PrimaryBlue)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
     ) {
         Row(
             modifier = Modifier
@@ -316,8 +335,8 @@ private fun TodayProgressCard(
                 CircularProgressIndicator(
                     progress = { percentage / 100f },
                     modifier = Modifier.size(64.dp),
-                    color = SoftBlueBg,
-                    trackColor = PureWhite,
+                    color = PureWhite,
+                    trackColor = PureWhite.copy(alpha = 0.3f),
                     strokeWidth = 6.dp
                 )
                 Text(
@@ -347,7 +366,7 @@ private fun CategoryCardsRow(
                     .height(115.dp),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (cat.isPrimary) LightSoftBlue else OrangeTagBg
+                    containerColor = if (cat.isPrimary) MaterialTheme.colorScheme.primaryContainer else OrangeTagBg
                 )
             ) {
                 Column(
@@ -360,7 +379,7 @@ private fun CategoryCardsRow(
                         modifier = Modifier
                             .size(36.dp)
                             .clip(RoundedCornerShape(10.dp))
-                            .background(if (cat.isPrimary) PrimaryBlue else OrangeTagText),
+                            .background(if (cat.isPrimary) MaterialTheme.colorScheme.primary else OrangeTagText),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -373,10 +392,10 @@ private fun CategoryCardsRow(
 
                     Column {
                         Text(
-                            text = cat.name,
+                            text = cat.name.asLocalizedCategory(),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (cat.isPrimary) PrimaryBlue else OrangeTagText
+                            color = if (cat.isPrimary) MaterialTheme.colorScheme.primary else OrangeTagText
                         )
                         Text(
                             text = stringResource(R.string.home_category_remaining_format, cat.remainingCount),
@@ -416,7 +435,7 @@ private fun HomeTaskCard(
                 checked = task.isChecked,
                 onCheckedChange = { onToggle() },
                 colors = CheckboxDefaults.colors(
-                    checkedColor = PrimaryBlue,
+                    checkedColor = MaterialTheme.colorScheme.primary,
                     uncheckedColor = IndicatorInactive
                 ),
                 modifier = Modifier.semantics {
@@ -444,19 +463,19 @@ private fun HomeTaskCard(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(6.dp))
-                            .background(if (task.isPrimaryCategory) LightSoftBlue else OrangeTagBg)
+                            .background(if (task.isPrimaryCategory) MaterialTheme.colorScheme.primaryContainer else OrangeTagBg)
                             .padding(horizontal = 8.dp, vertical = 2.dp)
                     ) {
                         Text(
-                            text = task.categoryName,
+                            text = task.categoryName.asLocalizedCategory(),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (task.isPrimaryCategory) PrimaryBlue else OrangeTagText
+                            color = if (task.isPrimaryCategory) MaterialTheme.colorScheme.primary else OrangeTagText
                         )
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = task.timeText,
+                        text = task.timeText.asLocalizedTime(),
                         fontSize = 12.sp,
                         color = TextSecondary
                     )
@@ -545,7 +564,7 @@ fun HomeBottomNavigation(
         FloatingActionButton(
             onClick = onAddTaskClick,
             shape = CircleShape,
-            containerColor = PrimaryBlue,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = PureWhite,
             elevation = FloatingActionButtonDefaults.elevation(
                 defaultElevation = 8.dp,
@@ -585,7 +604,7 @@ private fun NavigationTabItem(
         Icon(
             imageVector = icon,
             contentDescription = label,
-            tint = if (selected) PrimaryBlue else TextMuted,
+            tint = if (selected) MaterialTheme.colorScheme.primary else TextMuted,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.height(3.dp))
@@ -593,7 +612,7 @@ private fun NavigationTabItem(
             text = label,
             fontSize = 11.sp,
             fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
-            color = if (selected) PrimaryBlue else TextMuted
+            color = if (selected) MaterialTheme.colorScheme.primary else TextMuted
         )
     }
 }

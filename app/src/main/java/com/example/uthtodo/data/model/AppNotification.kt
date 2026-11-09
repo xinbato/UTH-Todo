@@ -1,4 +1,4 @@
-package com.example.uthtodo.data.model
+﻿package com.example.uthtodo.data.model
 
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp

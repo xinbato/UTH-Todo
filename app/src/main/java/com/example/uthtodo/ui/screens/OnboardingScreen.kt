@@ -49,11 +49,8 @@ import com.example.uthtodo.model.TaskItemModel
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
 import com.example.uthtodo.ui.theme.IndicatorInactive
-import com.example.uthtodo.ui.theme.LightSoftBlue
 import com.example.uthtodo.ui.theme.OrangeTagBg
 import com.example.uthtodo.ui.theme.OrangeTagText
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 
 @Composable
@@ -82,7 +79,7 @@ fun OnboardingScreen(
                 Surface(
                     modifier = Modifier.size(36.dp),
                     shape = RoundedCornerShape(10.dp),
-                    color = PrimaryBlue
+                    color = MaterialTheme.colorScheme.primary
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.Start) {
@@ -108,14 +105,14 @@ fun OnboardingScreen(
                                     modifier = Modifier
                                         .size(12.dp)
                                         .clip(CircleShape)
-                                        .background(SoftBlueBg),
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Box(
                                         modifier = Modifier
                                             .size(9.dp)
                                             .clip(CircleShape)
-                                            .background(PrimaryBlue)
+                                            .background(MaterialTheme.colorScheme.primary)
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(3.dp))
@@ -124,7 +121,7 @@ fun OnboardingScreen(
                                         .height(4.dp)
                                         .width(10.dp)
                                         .clip(CircleShape)
-                                        .background(SoftBlueBg)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
                                 )
                             }
                         }
@@ -138,7 +135,7 @@ fun OnboardingScreen(
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)) {
                             append(pageModel.headerModel.appNameBold)
                         }
-                        withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = PrimaryBlue)) {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.primary)) {
                             append(pageModel.headerModel.appNameRegular)
                         }
                     },
@@ -162,7 +159,7 @@ fun OnboardingScreen(
                 .fillMaxWidth()
                 .height(260.dp)
                 .clip(RoundedCornerShape(32.dp))
-                .background(if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceVariant else LightSoftBlue)
+                .background(if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.primaryContainer)
                 .padding(24.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -208,7 +205,7 @@ fun OnboardingScreen(
                                 .width(28.dp)
                                 .height(8.dp)
                                 .clip(CircleShape)
-                                .background(PrimaryBlue)
+                                .background(MaterialTheme.colorScheme.primary)
                         )
                     } else {
                         Box(
@@ -229,7 +226,7 @@ fun OnboardingScreen(
                     .fillMaxWidth()
                     .height(Dimens.ButtonHeight),
                 shape = RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text(
                     text = pageModel.buttonTextResId?.let { stringResource(it) } ?: pageModel.buttonText,
@@ -265,7 +262,7 @@ private fun OnboardingCard1a(
                         Icon(
                             imageVector = Icons.Filled.CheckCircle,
                             contentDescription = null,
-                            tint = PrimaryBlue,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(24.dp)
                         )
                     } else {
@@ -308,12 +305,12 @@ private fun OnboardingCard1b(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(if (category.isPrimary) LightSoftBlue else OrangeTagBg)
+                            .background(if (category.isPrimary) MaterialTheme.colorScheme.primaryContainer else OrangeTagBg)
                             .padding(horizontal = 12.dp, vertical = 6.dp)
                     ) {
                         Text(
                             text = category.name,
-                            color = if (category.isPrimary) PrimaryBlue else OrangeTagText,
+                            color = if (category.isPrimary) MaterialTheme.colorScheme.primary else OrangeTagText,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -353,7 +350,7 @@ private fun OnboardingCard1c(
                 Icon(
                     imageVector = Icons.Filled.Notifications,
                     contentDescription = null,
-                    tint = PrimaryBlue,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(38.dp)
                 )
             }

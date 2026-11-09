@@ -62,11 +62,7 @@ import java.util.Locale
 import java.util.TimeZone
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.LightSoftBlue
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.PrimaryBlueDark
 import com.example.uthtodo.ui.theme.PureWhite
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 
@@ -116,8 +112,16 @@ fun AddTaskScreen(
     var isReminderEnabled by remember { mutableStateOf(true) }
     var selectedPriority by remember { mutableIntStateOf(1) } // 0: Thấp, 1: Vừa, 2: Cao
 
-    val categories = listOf("Học tập", "Cuộc sống")
-    val priorities = listOf("Thấp", "Vừa", "Cao")
+    val categoryOptions = listOf(
+        "Học tập" to stringResource(R.string.task_list_filter_study),
+        "Cuộc sống" to stringResource(R.string.task_list_filter_life)
+    )
+    val priorityLabels = listOf(
+        stringResource(R.string.priority_low),
+        stringResource(R.string.priority_medium),
+        stringResource(R.string.priority_high)
+    )
+    val priorityBackendValues = listOf("Thấp", "Vừa", "Cao")
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -128,7 +132,7 @@ fun AddTaskScreen(
                 isSaveEnabled = taskTitle.isNotBlank(),
                 onCancelClick = onCancelClick,
                 onSaveClick = {
-                    val priorityStr = priorities.getOrElse(selectedPriority) { "Vừa" }
+                    val priorityStr = priorityBackendValues.getOrElse(selectedPriority) { "Vừa" }
                     onSaveClick(
                         taskTitle,
                         taskNote,
@@ -248,27 +252,27 @@ fun AddTaskScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    categories.forEach { cat ->
-                        val isSelected = selectedCategory == cat
+                    categoryOptions.forEach { (backendCat, displayCat) ->
+                        val isSelected = selectedCategory == backendCat
                         Surface(
                             modifier = Modifier
                                 .weight(1f)
                                 .height(48.dp)
                                 .clip(RoundedCornerShape(14.dp))
-                                .clickable(enabled = !isLoading) { selectedCategory = cat },
+                                .clickable(enabled = !isLoading) { selectedCategory = backendCat },
                             shape = RoundedCornerShape(14.dp),
-                            color = if (isSelected) LightSoftBlue else MaterialTheme.colorScheme.surfaceVariant,
+                            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
                             border = androidx.compose.foundation.BorderStroke(
                                 width = if (isSelected) 2.dp else 1.dp,
-                                color = if (isSelected) PrimaryBlueDark else MaterialTheme.colorScheme.outlineVariant
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
                             )
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
-                                    text = cat,
+                                    text = displayCat,
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.SemiBold,
-                                    color = if (isSelected) PrimaryBlueDark else MaterialTheme.colorScheme.onSurfaceVariant
+                                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
@@ -429,7 +433,7 @@ fun AddTaskScreen(
                             .padding(4.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        priorities.forEachIndexed { index, pName ->
+                        priorityLabels.forEachIndexed { index, pName ->
                             val isSelected = selectedPriority == index
                             Surface(
                                 modifier = Modifier
@@ -460,7 +464,7 @@ fun AddTaskScreen(
             // Save Task Button
             Button(
                 onClick = {
-                    val priorityStr = priorities.getOrElse(selectedPriority) { "Vừa" }
+                    val priorityStr = priorityBackendValues.getOrElse(selectedPriority) { "Vừa" }
                     onSaveClick(
                         taskTitle,
                         taskNote,
@@ -476,7 +480,7 @@ fun AddTaskScreen(
                 enabled = !isLoading && taskTitle.isNotBlank(),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = PureWhite
                 )
             ) {
@@ -584,7 +588,7 @@ private fun AddTaskTopBar(
             Text(
                 text = stringResource(R.string.action_cancel),
                 fontSize = 16.sp,
-                color = PrimaryBlue
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -600,7 +604,7 @@ private fun AddTaskTopBar(
                 text = stringResource(R.string.action_save),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = if (!isLoading && isSaveEnabled) PrimaryBlue else PrimaryBlue.copy(alpha = 0.4f)
+                color = if (!isLoading && isSaveEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
             )
         }
     }

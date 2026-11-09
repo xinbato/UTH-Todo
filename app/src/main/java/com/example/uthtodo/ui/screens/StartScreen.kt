@@ -38,8 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uthtodo.model.StartPageModel
 import com.example.uthtodo.ui.theme.Dimens
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.SoftBlueBg
 import com.example.uthtodo.ui.theme.UTHTodoTheme
 
 @Composable
@@ -51,7 +49,7 @@ fun StartScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(PrimaryBlue)
+            .background(MaterialTheme.colorScheme.primary)
             .clickable { onStartClick() }
             .systemBarsPadding()
             .padding(Dimens.PaddingLarge),
@@ -77,7 +75,7 @@ fun StartScreen(
                         Icon(
                             imageVector = Icons.Filled.CheckCircle,
                             contentDescription = null,
-                            tint = PrimaryBlue,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(22.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -86,7 +84,7 @@ fun StartScreen(
                                 .height(8.dp)
                                 .width(40.dp)
                                 .clip(CircleShape)
-                                .background(PrimaryBlue)
+                                .background(MaterialTheme.colorScheme.primary)
                         )
                     }
 
@@ -99,7 +97,7 @@ fun StartScreen(
                             modifier = Modifier
                                 .size(20.dp)
                                 .clip(CircleShape)
-                                .background(SoftBlueBg),
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Box(
@@ -115,7 +113,7 @@ fun StartScreen(
                                 .height(8.dp)
                                 .width(30.dp)
                                 .clip(CircleShape)
-                                .background(SoftBlueBg)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
                         )
                     }
                 }

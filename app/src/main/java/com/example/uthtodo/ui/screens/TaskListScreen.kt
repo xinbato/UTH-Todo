@@ -38,6 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.example.uthtodo.R
+import com.example.uthtodo.ui.components.asLocalizedCategory
+import com.example.uthtodo.ui.components.asLocalizedTime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -57,11 +59,8 @@ import com.example.uthtodo.ui.components.EmptyStateView
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
 import com.example.uthtodo.ui.theme.GrayBorder
-import com.example.uthtodo.ui.theme.LightSoftBlue
 import com.example.uthtodo.ui.theme.OrangeTagBg
 import com.example.uthtodo.ui.theme.OrangeTagText
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.PrimaryBlueDark
 import com.example.uthtodo.ui.theme.PureWhite
 import com.example.uthtodo.ui.theme.TextDark
 import com.example.uthtodo.ui.theme.TextMuted
@@ -177,7 +176,7 @@ fun TaskListScreen(
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                        focusedBorderColor = PrimaryBlue,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
                         unfocusedBorderColor = BorderGray
                     ),
                     singleLine = true
@@ -202,10 +201,10 @@ fun TaskListScreen(
                                 .clip(RoundedCornerShape(20.dp))
                                 .clickable { selectedCategoryFilter = index },
                             shape = RoundedCornerShape(20.dp),
-                            color = if (isSelected) PrimaryBlue else MaterialTheme.colorScheme.surface,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                             border = androidx.compose.foundation.BorderStroke(
                                 width = 1.dp,
-                                color = if (isSelected) PrimaryBlue else BorderGray
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else BorderGray
                             )
                         ) {
                             Text(
@@ -307,7 +306,7 @@ private fun TaskCardItem(
                 checked = task.isChecked,
                 onCheckedChange = { onToggle() },
                 colors = CheckboxDefaults.colors(
-                    checkedColor = PrimaryBlue,
+                    checkedColor = MaterialTheme.colorScheme.primary,
                     uncheckedColor = GrayBorder
                 ),
                 modifier = Modifier.semantics {
@@ -335,19 +334,19 @@ private fun TaskCardItem(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(6.dp))
-                            .background(if (task.isPrimaryCategory) LightSoftBlue else OrangeTagBg)
+                            .background(if (task.isPrimaryCategory) MaterialTheme.colorScheme.primaryContainer else OrangeTagBg)
                             .padding(horizontal = 8.dp, vertical = 2.dp)
                     ) {
                         Text(
-                            text = task.categoryName,
+                            text = task.categoryName.asLocalizedCategory(),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = if (task.isPrimaryCategory) PrimaryBlueDark else OrangeTagText
+                            color = if (task.isPrimaryCategory) MaterialTheme.colorScheme.primary else OrangeTagText
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = task.timeText,
+                        text = task.timeText.asLocalizedTime(),
                         fontSize = 12.sp,
                         color = TextMuted
                     )

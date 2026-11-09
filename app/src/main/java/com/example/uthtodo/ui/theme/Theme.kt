@@ -65,7 +65,8 @@ fun UTHTodoTheme(
     val colorScheme = if (!dynamicColor) {
         baseColorScheme.copy(
             primary = selectedPrimary,
-            primaryContainer = if (darkTheme) selectedPrimary.copy(alpha = 0.3f) else selectedPrimary.copy(alpha = 0.12f)
+            primaryContainer = if (darkTheme) selectedPrimary.copy(alpha = 0.3f) else selectedPrimary.copy(alpha = 0.12f),
+            onPrimaryContainer = if (darkTheme) selectedPrimary.copy(alpha = 0.9f) else selectedPrimary
         )
     } else {
         baseColorScheme

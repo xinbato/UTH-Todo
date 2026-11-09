@@ -46,6 +46,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.example.uthtodo.R
+import com.example.uthtodo.ui.components.asLocalizedCategory
+import com.example.uthtodo.ui.components.asLocalizedPriority
+import com.example.uthtodo.ui.components.asLocalizedTime
 import com.example.uthtodo.data.model.Subtask
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,11 +68,8 @@ import androidx.compose.ui.unit.sp
 import com.example.uthtodo.ui.theme.BorderGray
 import com.example.uthtodo.ui.theme.Dimens
 import com.example.uthtodo.ui.theme.GrayBorder
-import com.example.uthtodo.ui.theme.LightSoftBlue
 import com.example.uthtodo.ui.theme.OrangeTagBg
 import com.example.uthtodo.ui.theme.OrangeTagText
-import com.example.uthtodo.ui.theme.PrimaryBlue
-import com.example.uthtodo.ui.theme.PrimaryBlueDark
 import com.example.uthtodo.ui.theme.PureWhite
 import com.example.uthtodo.ui.theme.TextMuted
 import com.example.uthtodo.ui.theme.UTHTodoTheme
@@ -130,14 +130,14 @@ fun TaskDetailScreen(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(if (isPrimary) LightSoftBlue else OrangeTagBg)
+                        .background(if (isPrimary) MaterialTheme.colorScheme.primaryContainer else OrangeTagBg)
                         .padding(horizontal = 10.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = model.categoryName,
+                        text = model.categoryName.asLocalizedCategory(),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = if (isPrimary) PrimaryBlueDark else OrangeTagText
+                        color = if (isPrimary) MaterialTheme.colorScheme.primary else OrangeTagText
                     )
                 }
 
@@ -150,7 +150,7 @@ fun TaskDetailScreen(
                             .padding(horizontal = 10.dp, vertical = 4.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.task_detail_priority_prefix, model.priorityText),
+                            text = stringResource(R.string.task_detail_priority_prefix, model.priorityText.asLocalizedPriority()),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = if (isUrgent) Color(0xFFB42318) else Color(0xFF5C5C62)
@@ -174,12 +174,22 @@ fun TaskDetailScreen(
                 shape = RoundedCornerShape(16.dp),
                 color = MaterialTheme.colorScheme.surface
             ) {
+                val displayReminder = when (model.reminderText) {
+                    "Trước 15 phút" -> stringResource(R.string.add_task_reminder_subtitle)
+                    "Không có" -> stringResource(R.string.task_detail_reminder_none)
+                    else -> model.reminderText
+                }
+                val displayRepeat = when (model.repeatText) {
+                    "Không" -> stringResource(R.string.task_detail_repeat_none)
+                    else -> model.repeatText
+                }
+
                 Column(modifier = Modifier.fillMaxWidth()) {
                     // Due Date
                     DetailMetaRow(
                         icon = Icons.Outlined.CalendarToday,
                         label = stringResource(R.string.task_detail_due_date_label),
-                        value = model.dueDateText
+                        value = model.dueDateText.asLocalizedTime()
                     )
 
                     HorizontalDivider(color = Color(0xFFEDEDF0), thickness = 1.dp)
@@ -188,7 +198,7 @@ fun TaskDetailScreen(
                     DetailMetaRow(
                         icon = Icons.Outlined.Notifications,
                         label = stringResource(R.string.task_detail_reminder_label),
-                        value = model.reminderText
+                        value = displayReminder
                     )
 
                     HorizontalDivider(color = Color(0xFFEDEDF0), thickness = 1.dp)
@@ -197,7 +207,7 @@ fun TaskDetailScreen(
                     DetailMetaRow(
                         icon = Icons.Outlined.Repeat,
                         label = stringResource(R.string.task_detail_repeat_label),
-                        value = model.repeatText
+                        value = displayRepeat
                     )
                 }
             }
@@ -256,7 +266,7 @@ fun TaskDetailScreen(
                             .fillMaxWidth()
                             .height(6.dp)
                             .clip(RoundedCornerShape(3.dp)),
-                        color = PrimaryBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         trackColor = Color(0xFFE4E4EA)
                     )
                 }
@@ -291,7 +301,7 @@ fun TaskDetailScreen(
                                             onSubtaskToggle(sub.id, isChecked)
                                         },
                                         colors = CheckboxDefaults.colors(
-                                            checkedColor = PrimaryBlue,
+                                            checkedColor = MaterialTheme.colorScheme.primary,
                                             uncheckedColor = GrayBorder
                                         ),
                                         modifier = Modifier.semantics {
@@ -339,7 +349,7 @@ fun TaskDetailScreen(
                             Icon(
                                 imageVector = Icons.Default.Add,
                                 contentDescription = stringResource(R.string.task_detail_subtask_add_cd),
-                                tint = PrimaryBlue,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(10.dp))
@@ -375,7 +385,7 @@ fun TaskDetailScreen(
                                     text = stringResource(R.string.action_add),
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.SemiBold,
-                                    color = if (newSubtaskText.isNotBlank()) PrimaryBlue else Color(0xFF8A8A8E)
+                                    color = if (newSubtaskText.isNotBlank()) MaterialTheme.colorScheme.primary else Color(0xFF8A8A8E)
                                 )
                             }
                         }
@@ -393,7 +403,7 @@ fun TaskDetailScreen(
                     .height(56.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue,
+                    containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = PureWhite
                 )
             ) {
@@ -446,14 +456,14 @@ private fun TaskDetailTopBar(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
                 contentDescription = stringResource(R.string.nav_task_list),
-                tint = PrimaryBlue,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = stringResource(R.string.nav_task_list),
                 fontSize = 16.sp,
-                color = PrimaryBlue
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -462,7 +472,7 @@ private fun TaskDetailTopBar(
                 text = stringResource(R.string.action_edit),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = PrimaryBlue
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

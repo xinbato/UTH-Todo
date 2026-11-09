@@ -1,4 +1,4 @@
-package com.example.uthtodo.navigation
+﻿package com.example.uthtodo.navigation
 
 sealed class ScreenRoute(val route: String) {
     object Start : ScreenRoute("start")
